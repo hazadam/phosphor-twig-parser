@@ -1,0 +1,10 @@
+{% vue Counter %}
+    {% props %}
+        {% set initialCount = 99 %}
+    {% endprops %}
+    <h1 class="text-center">{% mask %}...{% then %}{ count }{% endmask %}</h1>
+    <div class="d-flex justify-content-center gap-2">
+        <button @click="dec" class="btn btn-primary">-</button>
+        <button @click="inc" class="btn btn-primary">+</button>
+    </div>
+{% endvue %}

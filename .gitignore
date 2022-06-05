@@ -1,0 +1,13 @@
+/vendor/
+
+###> dev ###
+/.dev
+/.idea
+docker-compose.yml
+.php-cs-fixer.cache
+###< dev ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
