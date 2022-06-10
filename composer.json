@@ -1,5 +1,6 @@
 {
     "name": "hazadam/phosphor-twig-parser",
+    "version": "1.0.0",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "stable",
