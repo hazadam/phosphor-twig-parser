@@ -1,10 +1,26 @@
 {% vue Counter %}
-    {% props %}
-        {% set initialCount = 99 %}
-    {% endprops %}
-    <h1 class="text-center">{% mask %}...{% then %}{ count }{% endmask %}</h1>
-    <div class="d-flex justify-content-center gap-2">
-        <button @click="dec" class="btn btn-primary">-</button>
-        <button @click="inc" class="btn btn-primary">+</button>
+    <h1>Counter</h1>
+    {% if true %}
+        {% for i in 1..5 %}
+            <p>{% mask %}...{% then %}{ count }{% endmask %}</p>
+        {% endfor %}
+    {% endif %}
+    <div>
+        <button @click="dec" type="button">-</button>
+        <button @click="inc" type="button">+</button>
     </div>
+    {% block javascript %}
+    import phosphor from '@hazadam/phosphor-js';
+    import {ref} from '@vue/reactivity';
+    export default phosphor({
+        name: 'Counter',
+        props: ['initialCount'],
+        setup: function(props) {
+            const count = ref(props.initialCount || 0);
+            const dec = () => count.value--;
+            const inc = () => count.value++;
+            return {count, dec, inc};
+        }
+    });
+    {% endblock %}
 {% endvue %}

@@ -8,6 +8,7 @@ use Generator;
 use Hazadam\Phosphor\TwigParser\Node\MaskNode;
 use Hazadam\Phosphor\TwigParser\Node\PropsNode;
 use Hazadam\Phosphor\TwigParser\Node\VueComponentNode;
+use Twig\Node\BlockReferenceNode;
 use Twig\Node\Expression\ConstantExpression;
 use Twig\Node\Expression\FilterExpression;
 use Twig\Node\Expression\TempNameExpression;
@@ -47,6 +48,9 @@ final class ComponentTokenParser extends AbstractTokenParser
             } elseif ($this->isMaskNode($node) && $node->getAttribute('nesting') === self::$nesting) {
                 $shadowParentNode->setNode($name, $node->getAttribute('mask'));
                 $parentNode->setNode($name, $node->getAttribute('then'));
+            } elseif ($this->isBlockJavascriptNode($node)) {
+                $shadowParentNode->removeNode($name);
+                $parentNode->removeNode($name);
             } else {
                 $shadowParentNode->setNode($name, $node);
                 $parentNode->setNode($name, $node);
@@ -100,6 +104,11 @@ final class ComponentTokenParser extends AbstractTokenParser
     private function isMaskNode(Node $node): bool
     {
         return is_a($node, MaskNode::class);
+    }
+
+    private function isBlockJavascriptNode(Node $node): bool
+    {
+        return is_a($node, BlockReferenceNode::class) && $node->getAttribute('name') === 'javascript';
     }
 
     public static function normalizeName(string $name): string
